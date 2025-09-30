@@ -1,14 +1,14 @@
 SHELL=bash
 .PHONY: Ascend.install
 
-Ascend.install: Ascend-cann-toolkit_8.3.RC1.alpha002_linux-aarch64.run python.dep
+Ascend.install: Ascend-cann-toolkit_8.2.RC2_linux-aarch64.run python.dep
 	chmod +x $<
 	./$< --install && touch $@
 
 # 8.2.RC2 cannot support python3.12
-Ascend-cann-toolkit_8.3.RC1.alpha002_linux-aarch64.run:
-	#curl -L -o $@ 'https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%208.2.RC2/Ascend-cann-toolkit_8.2.RC2_linux-aarch64.run?response-content-type=application/octet-stream'
-	curl -L -o $@ 'https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/Milan-ASL/Milan-ASL%20V100R001C23B800TP004/Ascend-cann-toolkit_8.3.RC1.alpha002_linux-aarch64.run?response-content-type=application/octet-stream'
+Ascend-cann-toolkit_8.2.RC2_linux-aarch64.run:
+	curl -L -o $@ 'https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/CANN/CANN%208.2.RC2/Ascend-cann-toolkit_8.2.RC2_linux-aarch64.run?response-content-type=application/octet-stream'
+	#curl -L -o $@ 'https://ascend-repo.obs.cn-east-2.myhuaweicloud.com/Milan-ASL/Milan-ASL%20V100R001C23B800TP004/Ascend-cann-toolkit_8.2.RC2_linux-aarch64.run?response-content-type=application/octet-stream'
 
 python_pkg=attrs cython numpy decorator sympy cffi pyyaml pathlib2 psutil protobuf scipy requests absl-py
 
@@ -21,6 +21,10 @@ dep/%.install:
 Miniconda.install: Miniconda3-latest-Linux-aarch64.sh
 	mkdir -p ~/miniconda3
 	bash ./$< -b -u -p ~/miniconda3
+	echo "Please run following command"
+	echo "source ~/miniconda3/bin/activate"
+	echo "conda create -n py11 python=3.11.4"
+	echo "conda activate py11"
 Miniconda3-latest-Linux-aarch64.sh:
 	wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/$@ -O $@
 .SECONDARY:
